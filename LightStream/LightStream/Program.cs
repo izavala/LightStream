@@ -11,7 +11,7 @@ namespace LightStream
         static void Main(string[] args)
         {
            FileSystem = ActorSystem.Create("FileSystem");
-            IActorRef receiver = FileSystem.ActorOf(Props.Create<FileReceive>(), "Receiver");
+            IActorRef receiver = FileSystem.ActorOf(Props.Create<FileReceive>(DIRECTORY), "Receiver");
             IActorRef coordinator = FileSystem.ActorOf(Props.Create(()=> new FileCoordinator(receiver, DIRECTORY)), "Coordinator");
             IActorRef writer = FileSystem.ActorOf(Props.Create<ConsoleWrite>(),"Writer");
             IActorRef validator = FileSystem.ActorOf(Props.Create(()=>new FileValidatorActor(writer,coordinator)));

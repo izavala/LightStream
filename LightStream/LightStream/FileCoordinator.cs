@@ -8,10 +8,13 @@ namespace LightStream
 {
     class FileCoordinator : ReceiveActor
     {
-       
+        private readonly string _fileDirectory;
+        ICanTell _buddy;
 
-        public FileCoordinator()
+        public FileCoordinator( ICanTell buddy, string fileDirectory)
         {
+            _fileDirectory = fileDirectory;
+            _buddy = buddy;
             WaitForCommand();
         }
         
@@ -20,13 +23,13 @@ namespace LightStream
             Receive<ReadFile>(rf =>
             {
                 Context.ActorOf(Props.Create(
-                    () => new FileReceive(rf._filePath)));
+                    () => new FileReceive(_fileDirectory)));
             });
 
             Receive<SendFile>(sf =>
             {
                 Context.ActorOf(Props.Create(
-                    () => new FileSend(sf._filePath)));
+                    () => new FileSendActor(sf._filePath,_buddy)));
             });
         }
 

@@ -26,6 +26,28 @@ namespace LightStream
                 _filePath = FilePath;
             }
         }
+        public class SendBytes
+        {
+            public byte[] _bytes;
+            public int _len;
+            public SendBytes(byte[] by, int len)
+            {
+                _len = len;
+                _bytes = by;
+            }
+        }
+        public class StartSream
+        {
+            public string _path;
+            public int _len;
+            public StartSream(string path, int len)
+            {
+                _path = path;
+                _len = len;
+            }
+        }
+
+        public class StopStream { };
         public class InputSuccess
         {
             public InputSuccess(string reason)

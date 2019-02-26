@@ -13,11 +13,13 @@ namespace LightStream
             {
                 var msg = message as Messages.InputError;
                 Console.WriteLine(msg.Reason);
+                
             }
             else if (message is Messages.InputSuccess)
             {
                 var msg = message as Messages.InputSuccess;
                 Console.WriteLine(msg.Reason);
+                
             }
             else
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LightStream
 {
-    class Messages
+    public class Messages
     {
 
         public class ReadFile

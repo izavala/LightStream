@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LightStream
 {
-    class FileValidatorActor : UntypedActor
+    public class FileValidatorActor : UntypedActor
     {
         private readonly IActorRef _consoleWrite;
         private readonly IActorRef _fileCoordinator;

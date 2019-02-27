@@ -1,20 +1,25 @@
-//using System;
-//using Xunit;
-//using Akka.test;
-//using Akka.TestKit.Xunit2;
+using System;
+using Xunit;
+using Akka.Actor;
+using Akka.TestKit.Xunit2;
+using LightStream;
+using System.IO;
 
+namespace LightStreamTest
+{
+    public class UnitTest1 : TestKit
+    {
+        public static string DIRECTORY = "TestFile.txt";
+        [Fact]
+        public void Send_File_Test()
+        {
+            ActorSystem TestSystem;
+            TestSystem = ActorSystem.Create("TestSystem");
 
-//namespace LightStreamTest
-//{
-//    public class UnitTest1
-//    {
-//        [Fact]
-//        public void Send_File_Test()
-//        {
-//            public static ActorSystem FileSystem;
-//            byte[] myTestbuff = new byte[12020];
-//            FileSystem = ActorSystem.Create("FileSystem");
+            var sender = TestSystem.ActorOf(Props.Create(() => new FileSendActor(DIRECTORY,TestActor)));
+            ExpectMsg<Messages.StartSream>();
+            ExpectMsg<Messages.SendBytes>();
 
-//        }
-//    }
-//}
+        }
+    }
+}

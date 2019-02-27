@@ -6,7 +6,7 @@ using static LightStream.Messages;
 
 namespace LightStream
 {
-    class FileCoordinator : ReceiveActor
+    public class FileCoordinator : ReceiveActor
     {
         private readonly string _fileDirectory;
         ICanTell _buddy;

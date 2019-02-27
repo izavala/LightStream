@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LightStream
 {
-    class ConsoleWrite : UntypedActor
+    public class ConsoleWrite : UntypedActor
     {
         protected override void OnReceive(object message)
         {

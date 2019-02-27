@@ -7,7 +7,7 @@ using static LightStream.Messages;
 
 namespace LightStream
 {
-    class FileSendActor : ReceiveActor , IDisposable
+    public class FileSendActor : ReceiveActor , IDisposable
     {
         private readonly string _filePath;
         private readonly int MAXMESSAGESIZE = 12000;
@@ -23,7 +23,7 @@ namespace LightStream
         {
             Receive<SendBytes>(b=>
             {
-                int loops = (int)b._len/ MAXMESSAGESIZE;
+                int loops = b._len/ MAXMESSAGESIZE;
                 int remainder = b._len % MAXMESSAGESIZE;
                 byte[] tempBuffer = new byte[MAXMESSAGESIZE];
                 int _pt = 0;

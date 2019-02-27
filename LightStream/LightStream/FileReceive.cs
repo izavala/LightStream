@@ -8,7 +8,7 @@ using static LightStream.Messages;
 
 namespace LightStream
 {
-    class FileReceive : ReceiveActor
+    public class FileReceive : ReceiveActor
     {
         private readonly ILoggingAdapter _log = Context.GetLogger();
         private string _fileName;
@@ -34,7 +34,7 @@ namespace LightStream
 
             Receive<SendBytes>(b =>
             {
-                _log.Info("Packet received with with {0} bytes",b._bytes);
+                _log.Info("Packet received with with {0} bytes",b._len);
                 for(var i = 0; i<b._len;i++)
                 {
                     buffer[_pt++] = b._bytes[i];

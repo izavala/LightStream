@@ -5,7 +5,10 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightStream", "LightStream\LightStream.csproj", "{3022ED34-8E53-40C9-9FC5-C78564B81F4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightStreamTest", "LightStreamTest\LightStreamTest.csproj", "{EA2E8F41-A287-40E2-ADA9-CDE8A99597D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightStreamTest", "LightStreamTest\LightStreamTest.csproj", "{EA2E8F41-A287-40E2-ADA9-CDE8A99597D0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3022ED34-8E53-40C9-9FC5-C78564B81F4D} = {3022ED34-8E53-40C9-9FC5-C78564B81F4D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

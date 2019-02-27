@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LightStream
 {
-    class ReadActor : UntypedActor
+    public class ReadActor : UntypedActor
     {
         public const string StartCommand = "start";
         public const string ExitCommand = "exit";

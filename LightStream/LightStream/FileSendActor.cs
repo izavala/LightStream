@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using Akka.Event;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ namespace LightStream
 {
     public class FileSendActor : ReceiveActor , IDisposable
     {
+        private readonly ILoggingAdapter _log = Context.GetLogger();
         private readonly string _filePath;
         private readonly int MAXMESSAGESIZE = 12000;
         private readonly ICanTell _buddy;
@@ -25,31 +27,34 @@ namespace LightStream
             {
                 int loops = b._len/ MAXMESSAGESIZE;
                 int remainder = b._len % MAXMESSAGESIZE;
-                byte[] tempBuffer = new byte[MAXMESSAGESIZE];
                 int _pt = 0;
-
-                _buddy.Tell(new Messages.StartSream(_filePath, b._len),Self);
+                _log.Info("Sart");
+                _buddy.Tell(new StartSream(_filePath, b._len),Self);
                 for (var i=0; i< loops; i++)
                 {
-                    for(var ii = 0; ii< MAXMESSAGESIZE; ii++)
+                    byte[] tempBuffer = new byte[MAXMESSAGESIZE];
+
+                    for (var ii = 0; ii< MAXMESSAGESIZE; ii++)
                     {
-                        tempBuffer[ii] = b._bytes[_pt];
-                        _pt++;
+
+                        tempBuffer[ii] = b._bytes[_pt++];
+                        
                     }
-                    _buddy.Tell(new Messages.SendBytes(tempBuffer, MAXMESSAGESIZE),Self);
-                    Array.Clear(tempBuffer, 0, tempBuffer.Length);
+                    _log.Info("package{0} of {1} sent.", i, loops);
+                    _buddy.Tell(new SendBytes(tempBuffer, MAXMESSAGESIZE, i),Self);
                 }
                 if(remainder!=0)
                 {
+                    byte[] tempBuffer = new byte[MAXMESSAGESIZE];
+
                     for (var i = 0; i < remainder; i++)
                     {
-                        tempBuffer[i] = b._bytes[_pt];
-                        _pt++;
+                        tempBuffer[i] = b._bytes[_pt++];
                     }
-                    _buddy.Tell(new Messages.SendBytes(tempBuffer, remainder),Self);
-                    Array.Clear(tempBuffer, 0, tempBuffer.Length);
+                    _buddy.Tell(new SendBytes(tempBuffer, remainder,0),Self);
                 }
-                _buddy.Tell(new Messages.StopStream { },Self);
+                _buddy.Tell(new StopStream { },Self);
+                Context.Stop(Self);
             });
 
         }
@@ -58,7 +63,7 @@ namespace LightStream
         {
             var fileToBytes = File.ReadAllBytes(Path.GetFullPath(_filePath));
             var len = fileToBytes.Length;
-            Self.Tell(new SendBytes(fileToBytes, len));
+            Self.Tell(new SendBytes(fileToBytes, len,0));
         }
 
         public void Dispose()

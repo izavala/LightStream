@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Akka.Actor;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,13 +8,22 @@ namespace LightStream
     public class Messages
     {
 
-        public class ReadFile
-        {
-            public string _filePath;
+        public class SendingFile {
+            //public IActorRef _sender;
 
-            public ReadFile(string FilePath)
+            //public SendingFile(IActorRef sender )
+            //{
+            //    _sender = sender;
+            //}
+        }
+
+        public class ReceivingFile
+        {
+            public IActorRef _sender;
+
+            public ReceivingFile(IActorRef sender)
             {
-                _filePath = FilePath;
+                _sender = sender;
             }
         }
 
@@ -30,12 +40,15 @@ namespace LightStream
         {
             public byte[] _bytes;
             public int _len;
-            public SendBytes(byte[] by, int len)
+            public int packetNumber;
+            public SendBytes(byte[] by, int len, int package)
             {
                 _len = len;
                 _bytes = by;
+                packetNumber = package;
             }
         }
+
         public class StartSream
         {
             public string _path;
@@ -48,6 +61,9 @@ namespace LightStream
         }
 
         public class StopStream { };
+
+        public class BeginConnection { };
+        public class ConnectionEstablished { };
         public class InputSuccess
         {
             public InputSuccess(string reason)

@@ -9,4 +9,10 @@
     <ProjectReference Include="..\LightStream\LightStream.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Watch.hocon">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

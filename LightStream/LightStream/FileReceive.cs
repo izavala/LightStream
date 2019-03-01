@@ -53,7 +53,10 @@ namespace LightStream
 
         private void SaveFile()
         {
-            File.WriteAllBytes(Path.Combine(_fileDirectory,_fileName), buffer);
+
+            
+            File.WriteAllBytesAsync(Path.Combine(_fileDirectory,_fileName), buffer);
+            
         }
     }
 }

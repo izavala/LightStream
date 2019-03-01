@@ -29,7 +29,7 @@ namespace LightStream
                 if(File.Exists(msg))
                 {
                     _consoleWrite.Tell(new Messages.InputSuccess("Starting to send File"));
-                    _fileCoordinator.Tell(new Messages.SendFile(msg));
+                    //_fileCoordinator.Tell(new Messages.SendFile(msg));
                     Sender.Tell(new Messages.StopStream { });
 
                 }

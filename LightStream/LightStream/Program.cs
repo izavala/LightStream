@@ -16,8 +16,7 @@ namespace LightStream
             var config = HoconLoader.ParseConfig("Stream.hocon");
             FileSystem = ActorSystem.Create("FileSystem", config);
             
-            var Buddy = FileSystem.ActorSelection("akka.tcp://BuddySystem@localhost:8081/user/Coordinator");
-            IActorRef coordinator = FileSystem.ActorOf(Props.Create(()=> new FileCoordinator(Buddy, DIRECTORY)), "Coordinator");
+            IActorRef coordinator = FileSystem.ActorOf(Props.Create(()=> new FileCoordinatorLS( DIRECTORY)), "Coordinator");
             IActorRef writer = FileSystem.ActorOf(Props.Create<ConsoleWrite>(),"Writer");
             IActorRef validator = FileSystem.ActorOf(Props.Create(()=>new FileValidatorActor(writer,coordinator)));
             IActorRef reader = FileSystem.ActorOf(Props.Create<ReadActor>(validator), "Reader");

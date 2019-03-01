@@ -77,7 +77,7 @@ namespace LightStream
                 {
                     _log.Info("Send Actor created for: {0}", rec._fileName);
                     send = Context.ActorOf(Props.Create(
-                    () => new FileSendActor(rec._filePath, rec._filePath, rec._sender)), actorName);
+                    () => new FileSendActor(rec._filePath, rec._fileName, rec._sender)), actorName);
                 }
                 else
                 {

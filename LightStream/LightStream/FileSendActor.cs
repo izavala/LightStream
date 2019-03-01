@@ -58,8 +58,9 @@ namespace LightStream
                 }
                 
                 _buddy.Tell(new StopStream { },Self);
-                Thread.Sleep(50);
-                Context.Stop(Self);
+
+                Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromSeconds(1.5), Self, PoisonPill.Instance, ActorRefs.NoSender);
+                
             });
 
         }

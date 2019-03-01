@@ -9,22 +9,28 @@ namespace LightStream
     {
 
         public class SendingFile {
-            //public IActorRef _sender;
+            public string _filePath;
+            public string _fileName;
 
-            //public SendingFile(IActorRef sender )
-            //{
-            //    _sender = sender;
-            //}
+            public SendingFile( string FileName, string FilePath)
+            {
+                _filePath = FilePath;
+                _fileName = FileName;
+            }
         }
 
         public class ReceivingFile
         {
             public IActorRef _sender;
+            public string _filePath;
+            public string _fileName;
 
-            public ReceivingFile(IActorRef sender)
+            public ReceivingFile(IActorRef sender, string FilePath, string FileName)
             {
                 _sender = sender;
-            }
+                _filePath = FilePath;
+                _fileName = FileName;
+        }
         }
 
         public class SendFile

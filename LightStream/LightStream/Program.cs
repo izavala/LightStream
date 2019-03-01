@@ -8,7 +8,8 @@ namespace LightStream
     class Program
     {
         public static ActorSystem FileSystem;
-        public static string DIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/LightStream/ReceivedData";
+        //public static string DIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/LightStream/ReceivedData";
+        public static string DIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/Reported";
         static void Main(string[] args)
         {
             var config = HoconLoader.ParseConfig("Stream.hocon");

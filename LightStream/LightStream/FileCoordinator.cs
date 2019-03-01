@@ -12,7 +12,8 @@ namespace LightStream
         private readonly ILoggingAdapter _log = Context.GetLogger();
         private readonly string _fileDirectory;
         ICanTell _buddy;
-        private string path;
+        private string incomingPath;
+        private string incomingName;
         
         public FileCoordinator( ICanTell buddy, string fileDirectory)
         {
@@ -50,14 +51,15 @@ namespace LightStream
 
             Receive<SendFile>(sf =>
             {
-                path = sf._filePath;
+                incomingPath = sf._filePath;
+                incomingName = sf._fileName;
                 _log.Info("Coordinating send");
                 _buddy.Tell(new SendingFile { }, Self);
             });
             Receive<ReceivingFile>(rec =>
             {
                 Context.ActorOf(Props.Create(
-                    () => new FileSendActor(path, rec._sender)));
+                    () => new FileSendActor(incomingPath,incomingName, rec._sender)));
             });
         }
 

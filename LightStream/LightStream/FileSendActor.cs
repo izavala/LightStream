@@ -12,11 +12,13 @@ namespace LightStream
     {
         private readonly ILoggingAdapter _log = Context.GetLogger();
         private readonly string _filePath;
+        private readonly string _fileName;
         private readonly int MAXMESSAGESIZE = 12000;
         private readonly ICanTell _buddy;
-        public FileSendActor(string FilePath, ICanTell buddy)
+        public FileSendActor(string FilePath, string FileName, ICanTell buddy)
         {
             _filePath = FilePath;
+            _fileName = FileName;
             _buddy = buddy;
             StartToSend();
         }
@@ -29,7 +31,7 @@ namespace LightStream
                 int remainder = b._len % MAXMESSAGESIZE;
                 int _pt = 0;
                 _log.Info("Sart");
-                _buddy.Tell(new StartSream(_filePath, b._len),Self);
+                _buddy.Tell(new StartSream(_fileName, b._len),Self);
                 for (var i=0; i< loops; i++)
                 {
                     byte[] tempBuffer = new byte[MAXMESSAGESIZE];
@@ -61,7 +63,10 @@ namespace LightStream
 
         protected override void PreStart()
         {
-            var fileToBytes = File.ReadAllBytes(Path.GetFullPath(_filePath));
+            //var fileToBytes = File.ReadAllBytes(Path.GetFullPath(_filePath));
+            //var directory = Direc
+            
+            var fileToBytes = File.ReadAllBytes(_filePath);
             var len = fileToBytes.Length;
             Self.Tell(new SendBytes(fileToBytes, len,0));
         }

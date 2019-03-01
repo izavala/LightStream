@@ -30,10 +30,12 @@ namespace LightStream
         public class SendFile
         {
             public string _filePath;
+            public string _fileName;
 
-            public SendFile(string FilePath)
+            public SendFile(string FilePath, string FileName)
             {
                 _filePath = FilePath;
+                _fileName = FileName;
             }
         }
         public class SendBytes

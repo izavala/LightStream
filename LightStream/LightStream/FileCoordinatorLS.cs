@@ -4,18 +4,16 @@ using static LightStream.Messages;
 
 namespace LightStream
 {
-    public class FileCoordinator : ReceiveActor, IWithUnboundedStash
+    public class FileCoordinatorLS : ReceiveActor, IWithUnboundedStash
     {
         private readonly ILoggingAdapter _log = Context.GetLogger();
         private readonly string _fileDirectory;
-        ICanTell _buddy;
 
         public IStash Stash { get; set; }
 
-        public FileCoordinator(ICanTell buddy, string fileDirectory)
+        public FileCoordinatorLS(string fileDirectory)
         {
             _fileDirectory = fileDirectory;
-            _buddy = buddy;
             WaitForCommand();
 
         }
@@ -35,7 +33,7 @@ namespace LightStream
                     _log.Info("Receive Actor created for: {0}", rf._fileName);
                     receive = Context.ActorOf(Props.Create(
                     () => new FileReceive(_fileDirectory)), actorName);
-                     _buddy.Tell(new ReceivingFile(receive, rf._filePath, rf._fileName), Self);
+                     Sender.Tell(new ReceivingFile(receive, rf._filePath, rf._fileName), Self);
                 }
                 else
                 {
@@ -48,7 +46,7 @@ namespace LightStream
             Receive<SendFile>(sf =>
             {
                 _log.Info("Coordinating transfer of {0}", sf._fileName);
-                _buddy.Tell(new SendingFile(sf._fileName , sf._filePath), Self);
+                Sender.Tell(new SendingFile(sf._fileName , sf._filePath), Self);
             });
             Receive<ReceivingFile>(rec =>
             {

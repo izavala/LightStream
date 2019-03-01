@@ -12,6 +12,7 @@ namespace LightStream
         public static string DIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/Reported";
         static void Main(string[] args)
         {
+            Console.Title = "LightStream";
             var config = HoconLoader.ParseConfig("Stream.hocon");
             FileSystem = ActorSystem.Create("FileSystem", config);
             

@@ -34,7 +34,6 @@ namespace LightStream
 
             Receive<SendBytes>(b =>
             {
-                _log.Info("Packet received with with {0} bytes",b._len);
                 _log.Info("package {0} received.", b.packetNumber);
                 for (var i = 0; i<b._len;i++)
                 {
@@ -44,7 +43,6 @@ namespace LightStream
             Receive<StopStream>( b =>
             {
                 _log.Info("Stream ended");
-                _log.Info("Buffer has {0}", buffer.Length);
                 SaveFile();
                 Context.Stop(Self);
             });
@@ -54,7 +52,7 @@ namespace LightStream
         private void SaveFile()
         {
 
-            
+            _log.Info("File Saved now");
             File.WriteAllBytesAsync(Path.Combine(_fileDirectory,_fileName), buffer);
             
         }

@@ -6,11 +6,12 @@ namespace NightWatch
 {
     class Program
     {
+    
         public static ActorSystem WatchSystem;
-        public static string WDIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/Reported";
-        public static string GDIRECTORY = "C:/Users/user/Documents/GitHub/LightStream/LightStream/WatchList";
+        public static string GDIRECTORY = "C:/Users/user/Documents/WatchList";
         static void Main(string[] args)
         {
+            Console.Title = "Night Watcher";
             var config = HoconLoader.ParseConfig("Watch.hocon");
             WatchSystem = ActorSystem.Create("BuddySystem", config);
             var client = WatchSystem.ActorSelection("akka.tcp://FileSystem@localhost:8080/user/Coordinator");

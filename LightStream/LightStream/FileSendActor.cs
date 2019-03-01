@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using static LightStream.Messages;
 
 namespace LightStream
@@ -55,7 +56,9 @@ namespace LightStream
                     }
                     _buddy.Tell(new SendBytes(tempBuffer, remainder,0),Self);
                 }
+                
                 _buddy.Tell(new StopStream { },Self);
+                Thread.Sleep(50);
                 Context.Stop(Self);
             });
 
@@ -65,7 +68,7 @@ namespace LightStream
         {
             //var fileToBytes = File.ReadAllBytes(Path.GetFullPath(_filePath));
             //var directory = Direc
-            
+            _log.Info("Beginning to read {0}", _fileName);
             var fileToBytes = File.ReadAllBytes(_filePath);
             var len = fileToBytes.Length;
             Self.Tell(new SendBytes(fileToBytes, len,0));

@@ -18,27 +18,11 @@ namespace LightStream
             _buddy = buddy;
             _buddy.Tell(new BeginConnection { }, Self);
             _log.Info("Starting to connection with Buddy.");
-            EstablishConnection();
+            WaitForCommand();
 
         }
 
-        private void EstablishConnection()
-        {
-
-            Receive<BeginConnection>(b =>
-            {
-                _buddy.Tell(new ConnectionEstablished { }, Self);
-            });
-
-            Receive<ConnectionEstablished>(c =>
-            {
-                _log.Info("Connection established with Buddy.");
-                Become(WaitForCommand);
-                Stash.UnstashAll();
-            });
-
-            ReceiveAny(_ => Stash.Stash());
-        }
+    
 
         private void WaitForCommand()
         {
